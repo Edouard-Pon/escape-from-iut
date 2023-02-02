@@ -1,0 +1,20 @@
+<h2 class="page-header">Admin Page</h2>
+<div class="page-grid">
+    <% if (loggedIn === false) { %>
+        <section class="content">
+            <h2>Log In</h2>
+            <form action="/admin" method="post">
+                <div>
+                    <label for="passwd">Password</label>
+                    <input type="password" id="passwd" name="passwd" placeholder="Enter your password" required>
+                </div>
+                <div>
+                    <a class="btn btn-danger" href="/admin">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Log In</button>
+                </div>
+            </form>
+        </section>
+    <% } else if (loggedIn === true) { %>
+        Logged In As Admin
+    <% } %>
+</div>
