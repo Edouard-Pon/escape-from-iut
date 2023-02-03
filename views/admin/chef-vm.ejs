@@ -1,0 +1,18 @@
+<div class="page-grid">
+    <% if (loggedInChefVM === false) { %>
+        <form action="/admin/chef-vm" method="post">
+            <div>
+                <label for="passwd">Password</label>
+                <input type="password" id="passwd" name="passwd" placeholder="Enter your password" required>
+            </div>
+            <div>
+                <a class="btn btn-danger" href="/admin">Exit</a>
+                <button class="btn btn-primary" type="submit">Log In</button>
+            </div>
+        </form>
+    <% } else if (loggedInChefVM === true) { %>
+        <section class="content">
+            Connected To VM
+        </section>
+    <% } %>
+</div>
