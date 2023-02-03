@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
+const gameRouter = require('./routes/game')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 app.use('/', indexRouter)
 app.use('/admin', adminRouter)
+app.use('/game', gameRouter)
 
 app.listen(process.env.PORT || 3000)
 
