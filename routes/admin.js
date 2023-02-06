@@ -24,8 +24,12 @@ router.get('/chef-vm', (req, res) => {
     }
     if (req.cookies['loggedInChefVM'] === undefined) {
         res.render('admin/chef-vm.ejs', { loggedInChefVM: false })
+    } else if (req.cookies['secretURL'] === undefined) {
+        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: '' })
     } else {
-        res.render('admin/chef-vm.ejs', { loggedInChefVM: true })
+        const secretURL = CryptoJS.SHA1(req.cookies['secretURL'])
+
+        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: secretURL })
     }
 })
 
@@ -33,6 +37,16 @@ router.get('/chef-vm/passwd-vm', (req, res) => {
     const encryptedChefVMPassword = CryptoJS.AES.encrypt(req.cookies['chefVMPassword'], 'chef-vm-password').toString()
 
     res.render('admin/passwd-vm', { encryptedChefVMPassword: encryptedChefVMPassword })
+})
+
+router.get('/:id', (req, res) => {
+    const secretURL = CryptoJS.SHA1(req.cookies['secretURL'])
+
+    if (req.params.id === secretURL.toString()) {
+        res.render('admin/secret-page.ejs')
+    } else {
+        res.redirect('/admin')
+    }
 })
 
 router.post('/', async (req, res) => {
@@ -60,25 +74,36 @@ router.post('/', async (req, res) => {
 
 router.post('/chef-vm', async (req, res) => {
     try {
-        const chefVMPassword = req.cookies['chefVMPassword']
-        const passwordCheck = CryptoJS.AES.decrypt(req.body.passwd, 'chef-vm-password').toString(CryptoJS.enc.Utf8)
+        if (req.cookies['loggedInChefVM'] === undefined) {
+            const chefVMPassword = req.cookies['chefVMPassword']
+            const passwordCheck = CryptoJS.AES.decrypt(req.body.passwd, 'chef-vm-password').toString(CryptoJS.enc.Utf8)
 
-        if (chefVMPassword === passwordCheck) {
-            const secretLoggedInKey = uuid.v4()
+            if (chefVMPassword === passwordCheck) {
+                const secretLoggedInKey = uuid.v4()
+
+                let options = {
+                    httpOnly: true,
+                    sameSite: true
+                }
+
+                res.cookie('loggedInChefVM', secretLoggedInKey, options)
+                res.redirect('/admin/chef-vm')
+            }
+        } else if (req.cookies['loggedInChefVM'] !== undefined && req.cookies['secretURL'] === undefined) {
+            const secretURL = uuid.v4()
 
             let options = {
                 httpOnly: true,
                 sameSite: true
             }
 
-            res.cookie('loggedInChefVM', secretLoggedInKey, options)
+            res.cookie('secretURL', secretURL, options)
             res.redirect('/admin/chef-vm')
         } else {
             res.redirect('/admin/chef-vm')
         }
     } catch (error) {
         console.log(error)
-        console.log('test error')
     }
 })
 

@@ -10,11 +10,15 @@
                 <button class="btn btn-primary" type="submit">Log In</button>
             </div>
         </form>
-    <% } else if (loggedInChefVM === true) { %>
+    <% } else if (loggedInChefVM === true && secretURL === '') { %>
         <section class="content">
-
-            WIP
-
+            <form action="/admin/chef-vm" method="post">
+                <button type="submit"><img src="https://cdn.discordapp.com/attachments/1071222520516194335/1071222551822475264/logo.png" alt="Logo"></button>
+            </form>
+        </section>
+    <% } else { %>
+        <section>
+            <%= secretURL %>
         </section>
     <% } %>
 </div>
