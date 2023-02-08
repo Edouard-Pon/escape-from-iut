@@ -23,6 +23,7 @@
     grid-gap: 4rem;
     grid-template-columns: 100%;
     margin-bottom: 5rem;
+    width: 100%;
 }
 
 .content p {
