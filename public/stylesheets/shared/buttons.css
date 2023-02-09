@@ -33,3 +33,9 @@
     color: var(--color-btn-primary-text-dark);
     background-color: var(--color-btn-primary-background-dark);
 }
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}

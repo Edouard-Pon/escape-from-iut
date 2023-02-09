@@ -22,7 +22,6 @@
     display: grid;
     grid-gap: 4rem;
     grid-template-columns: 100%;
-    margin-bottom: 5rem;
     width: 100%;
 }
 
@@ -61,4 +60,30 @@
     z-index: -1;
     inset: 0;
     transform: skewY(-3deg);
+}
+
+.log-in {
+    width: 35%;
+    background-color: #8c6c6c;
+    border-radius: 2.2rem;
+    padding: 3.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.log-in form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-direction-column {
+    flex-direction: column;
 }
