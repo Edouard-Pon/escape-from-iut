@@ -43,7 +43,6 @@
 }
 
 .vm-grid {
-    margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(5, var(--image-width));
     grid-gap: 50px;
