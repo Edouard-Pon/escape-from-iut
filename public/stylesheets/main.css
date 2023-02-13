@@ -10,6 +10,7 @@
     font-size: 100%;
     color: var(--color-text-light);
     letter-spacing: 1px;
+    background: var(--color-background-dark);
 }
 
 *, *::before, *::after{
@@ -24,7 +25,6 @@
 }
 
 body {
-    background: var(--color-background-dark);
     min-height: 100vh;
 }
 

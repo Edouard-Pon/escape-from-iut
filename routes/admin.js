@@ -23,13 +23,13 @@ router.get('/chef-vm', (req, res) => {
         res.cookie('chefVMPassword', chefVMPassword, options)
     }
     if (req.cookies['loggedInChefVM'] === undefined) {
-        res.render('admin/chef-vm.ejs', { loggedInChefVM: false })
+        res.render('admin/chef-vm.ejs', { loggedInChefVM: false, layout: 'layouts/layout-vm.ejs' })
     } else if (req.cookies['secretURL'] === undefined) {
-        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: '' })
+        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: '', layout: 'layouts/layout-vm.ejs' })
     } else {
         const secretURL = CryptoJS.SHA1(req.cookies['secretURL'])
 
-        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: secretURL })
+        res.render('admin/chef-vm.ejs', { loggedInChefVM: true, secretURL: secretURL, layout: 'layouts/layout-vm.ejs' })
     }
 })
 
