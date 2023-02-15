@@ -2,9 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    const finalCode = req.cookies['something'].replace(/[;]/g, '')
-
     if (req.cookies['You_Ended_The_Game!'] !== undefined) {
+        const finalCode = req.cookies['something'].replace(/[;]/g, '')
         res.render('game/index', { valideCode: true, finalCode: finalCode })
     } else {
         res.render('game/index', { valideCode: false, finalCode: '' })
