@@ -11,18 +11,20 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const finalCode = req.body.passwd
-    const actualCode = req.cookies['something'].replace(/[;]/g, '')
-
     try {
-        if (finalCode === actualCode) {
-            let options = {
-                httpOnly: true,
-                sameSite: true
-            }
+        if (req.cookies['something'] !== undefined) {
+            const finalCode = req.body.passwd
+            const actualCode = req.cookies['something'].replace(/[;]/g, '')
 
-            res.cookie('You_Ended_The_Game!', 'Congrats!', options)
-            res.render('game/index', { valideCode: true, finalCode: actualCode })
+            if (finalCode === actualCode) {
+                let options = {
+                    httpOnly: true,
+                    sameSite: true
+                }
+
+                res.cookie('You_Ended_The_Game!', 'Congrats!', options)
+                res.render('game/index', { valideCode: true, finalCode: actualCode })
+            }
         } else {
             res.render('game/index', { valideCode: false, finalCode: '' })
         }
