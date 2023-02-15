@@ -20,7 +20,7 @@
 
 .page-grid {
     display: grid;
-    grid-gap: 4rem;
+    grid-gap: 2rem;
     grid-template-columns: 100%;
     width: 100%;
 }
@@ -32,8 +32,8 @@
 
 .content {
     display: grid;
-    grid-gap: 3.5rem;
-    padding: 10rem;
+    grid-gap: 1.2rem;
+    padding: 5rem;
 }
 
 .diagonal-positive {
@@ -46,7 +46,7 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    transform: skewY(+3deg);
+    transform: skewY(+1.2deg);
 }
 
 .diagonal-negative {
@@ -59,7 +59,7 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    transform: skewY(-3deg);
+    transform: skewY(-1.2deg);
 }
 
 .log-in {

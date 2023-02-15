@@ -10,6 +10,7 @@
                 <button class="btn btn-primary" type="submit">Log In</button>
             </div>
         </form>
+        <button class="btn btn-primary vm-hint-btn" onclick="alert('Check Source Code? F12')">Aide</button>
     </div>
     <!-- /admin/chef-vm/passwd-vm -->
 <% } else if (loggedInChefVM === true) { %>
@@ -42,4 +43,5 @@
         <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
+    <button class="btn btn-primary vm-hint-btn" onclick="alert('Trouve le code (secretURL) dans les dossiers! Utilise ce code dans URL: /admin/secretURL')">Aide</button>
 <% } %>

@@ -1,0 +1,56 @@
+<h1 class="page-title">Chapter 2: Discussion sur le groupe snap</h1>
+<div class="page-grid">
+    <section class="content diagonal-positive">
+        <h2>Lucas</h2>
+        <p>Ouais les gaaaaars, vous savez que le chef du dép il à un chat qui s'appelle gnocchi, un poisson rouge qui s’appel Dora et une chèvre qui s’appel Milka?</p>
+    </section>
+    <section class="content diagonal-negative">
+        <h2>Julien</h2>
+        <p>WESH COMMENT TU SAIS ÇA, T’A LE LIEN????</p>
+    </section>
+    <section class="content diagonal-positive">
+        <h2>Chiheb</h2>
+        <p>Voilà mon gars, bon maintenant le plus important, t'as trouvé le code?</p>
+    </section>
+    <section class="content diagonal-negative">
+        <h2>Lucas</h2>
+        <p>Quel code?</p>
+    </section>
+    <section class="content diagonal-positive">
+        <h2>Chiheb</h2>
+        <p>...</p>
+    </section>
+    <section class="content diagonal-negative">
+        <h2>Mathias</h2>
+        <p>On va te mêler Lucas</p>
+    </section>
+    <section class="content diagonal-positive">
+        <h2>Tyméo</h2>
+        <p>Mais toi t'es vraiment à l’ouest t'es bête ou quoi, on doit avoir le code de la salle des notes, pas savoir si le chef du dép à une chèvre ou un poisson qui s’appel Dora</p>
+    </section>
+    <section class="content diagonal-negative">
+        <h2>Bilal</h2>
+        <p>Bon bref envoie le lien, j’vais chercher le code</p>
+    </section>
+    <section class="content diagonal-positive">
+        <!--        Verify The Code-->
+        <% if (valideCode === false) { %>
+            <h2>Verifier le code:</h2>
+            <form action="/game" method="post">
+                <div class="form-item">
+                    <label for="passwd">Code</label>
+                    <input type="text" id="passwd" name="passwd" placeholder="Entrer le code" required>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Test</button>
+                </div>
+            </form>
+        <% } else { %>
+            <h2>Le code est Valide!</h2>
+            <p>Fin du jeu, félicitation!!!</p>
+        <% } %>
+    </section>
+    <% if (valideCode === true) { %>
+        <a class="btn btn-primary" href="/game/chapter3">Next Chapter</a>
+    <% } %>
+</div>
