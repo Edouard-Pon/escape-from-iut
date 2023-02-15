@@ -73,15 +73,33 @@
     </section>
     <section class="content diagonal-positive">
 <!--        Verify The Code-->
-        <h2></h2>
-        <p></p>
+        <% if (valideCode === false) { %>
+            <h2>Verifier le code:</h2>
+            <form action="/game" method="post">
+                <div class="form-item">
+                    <label for="passwd">Code</label>
+                    <input type="text" id="passwd" name="passwd" placeholder="Entrer le code" required>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Test</button>
+                </div>
+            </form>
+        <% } else { %>
+            <h2>Le code est Valide!</h2>
+            <p>Fin du jeu, félicitation!!!</p>
+        <% } %>
     </section>
 </div>
 <h1 class="page-title">Chapter 3</h1>
 <div class="page-grid">
     <section class="content diagonal-negative">
         <h2>Bilal</h2>
-        <p>J’ai enfin le code, vous devinerez jamais, il l’a caché dans un poème…</p>
+        <p>
+            J’ai enfin le code, vous devinerez jamais, il l’a caché dans un poème…
+            <% if (finalCode !== '') { %>
+                Le code est <%= finalCode %>
+            <% } %>
+        </p>
     </section>
     <section class="content diagonal-positive">
         <h2>Mateo</h2>
