@@ -43,21 +43,22 @@ router.get('/:id', (req, res) => {
     const secretURL = CryptoJS.SHA1(req.cookies['secretURL'])
     let codeIUT = ''
 
-    if (req.cookies['something'] === undefined) {
-        for (let i = 0; i < 7; ++i) {
-            codeIUT = codeIUT + Math.floor(Math.random() * 100)
-            codeIUT = codeIUT + ';'
-        }
-        let options = {
-            httpOnly: true,
-            sameSite: true
-        }
-
-        res.cookie('something', codeIUT, options)
-    }
-
     if (req.params.id === secretURL.toString()) {
-        codeIUT = req.cookies['something']
+        if (req.cookies['something'] === undefined) {
+            for (let i = 0; i < 7; ++i) {
+                codeIUT = codeIUT + Math.floor(Math.random() * 100)
+                codeIUT = codeIUT + ';'
+            }
+            let options = {
+                httpOnly: true,
+                sameSite: true
+            }
+
+            res.cookie('something', codeIUT, options)
+        }
+        if (req.cookies['something'] !== undefined) {
+            codeIUT = req.cookies['something']
+        }
         let tmp = codeIUT.split(';')
         res.render('admin/secret-page.ejs', { codeIUT: tmp })
     } else {
