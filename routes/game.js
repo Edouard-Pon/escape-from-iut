@@ -54,6 +54,8 @@ router.post('/chapter2', async (req, res) => {
 
                 res.cookie('You_Ended_The_Game!', 'Congrats!', options)
                 res.render('game/chapter2', { valideCode: true, finalCode: actualCode })
+            } else {
+                res.render('game/chapter2', { valideCode: false, finalCode: 'Wrong Code!' })
             }
         } else {
             res.render('game/chapter2', { valideCode: false, finalCode: '' })

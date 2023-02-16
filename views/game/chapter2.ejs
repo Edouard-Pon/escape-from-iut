@@ -36,7 +36,7 @@
         <!--        Verify The Code-->
         <% if (valideCode === false) { %>
             <h2>Verifier le code:</h2>
-            <form action="/game" method="post">
+            <form action="/game/chapter2" method="post">
                 <div class="form-item">
                     <label for="passwd">Code</label>
                     <input type="text" id="passwd" name="passwd" placeholder="Entrer le code" required>
@@ -45,6 +45,7 @@
                     <button class="btn btn-primary" type="submit">Test</button>
                 </div>
             </form>
+            <div><%= finalCode %></div>
         <% } else { %>
             <h2>Le code est Valide!</h2>
             <p>Fin du jeu, félicitation!!!</p>
