@@ -11,6 +11,14 @@ router.get('/', (req, res) => {
     }
 })
 
+router.get('/note-room', (req, res) => {
+    if (req.cookies['loggedInNoteRoom'] !== undefined) {
+        res.render('admin/note-room', { loggedIn: true, layout: 'layouts/layout-note-room.ejs' })
+    } else {
+        res.render('admin/note-room', { loggedIn: false, layout: 'layouts/layout-note-room.ejs' })
+    }
+})
+
 router.get('/chef-vm', (req, res) => {
     if (req.cookies['chefVMPassword'] === undefined) {
         const chefVMPassword = uuid.v4()
@@ -89,38 +97,54 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.post('/chef-vm', async (req, res) => {
-    try {
-        if (req.cookies['loggedInChefVM'] === undefined) {
-            const chefVMPassword = req.cookies['chefVMPassword']
-            const passwordCheck = CryptoJS.AES.decrypt(req.body.passwd, 'chef-vm-password').toString(CryptoJS.enc.Utf8)
+router.post('/chef-vm', (req, res) => {
+    if (req.cookies['loggedInChefVM'] === undefined) {
+        const chefVMPassword = req.cookies['chefVMPassword']
+        const passwordCheck = CryptoJS.AES.decrypt(req.body.passwd, 'chef-vm-password').toString(CryptoJS.enc.Utf8)
 
-            if (chefVMPassword === passwordCheck) {
-                const secretLoggedInKey = uuid.v4()
-
-                let options = {
-                    httpOnly: true,
-                    sameSite: true
-                }
-
-                res.cookie('loggedInChefVM', secretLoggedInKey, options)
-                res.redirect('/admin/chef-vm')
-            }
-        } else if (req.cookies['loggedInChefVM'] !== undefined && req.cookies['secretURL'] === undefined) {
-            const secretURL = uuid.v4()
+        if (chefVMPassword === passwordCheck) {
+            const secretLoggedInKey = uuid.v4()
 
             let options = {
                 httpOnly: true,
                 sameSite: true
             }
 
-            res.cookie('secretURL', secretURL, options)
-            res.redirect('/admin/chef-vm')
-        } else {
+            res.cookie('loggedInChefVM', secretLoggedInKey, options)
             res.redirect('/admin/chef-vm')
         }
-    } catch (error) {
-        console.log(error)
+    } else if (req.cookies['loggedInChefVM'] !== undefined && req.cookies['secretURL'] === undefined) {
+        const secretURL = uuid.v4()
+
+        let options = {
+            httpOnly: true,
+            sameSite: true
+        }
+
+        res.cookie('secretURL', secretURL, options)
+        res.redirect('/admin/chef-vm')
+    } else {
+        res.redirect('/admin/chef-vm')
+    }
+})
+
+router.post('/note-room', (req, res) => {
+    if (req.cookies['loggedInNoteRoom'] === undefined) {
+        const passwordCheck = req.body.passwd
+
+        if (passwordCheck.toLowerCase() === 'milka') {
+            let options = {
+                httpOnly: true,
+                sameSite: true
+            }
+
+            res.cookie('loggedInNoteRoom', 'One step before the real end!', options)
+            res.render('admin/note-room', { loggedIn: true, layout: 'layouts/layout-note-room.ejs' })
+        } else {
+            res.render('admin/note-room', { loggedIn: false, layout: 'layouts/layout-note-room.ejs'  })
+        }
+    } else {
+        res.redirect('/admin/note-room')
     }
 })
 

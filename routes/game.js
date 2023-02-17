@@ -1,4 +1,5 @@
 const express = require('express')
+const CryptoJS = require("crypto-js");
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -15,32 +16,36 @@ router.get('/chapter1', (req, res) => {
 })
 
 router.get('/chapter2', (req, res) => {
-    if (req.cookies['You_Ended_The_Game!'] !== undefined) {
-        const finalCode = req.cookies['something'].replace(/[;]/g, '')
-        res.render('game/chapter2', { valideCode: true, finalCode: finalCode })
+    if (req.cookies['secretURL'] !== undefined) {
+        const secretURL = CryptoJS.SHA1(req.cookies['secretURL'])
+        res.render('game/chapter2', { secretURL: secretURL })
     } else {
-        res.render('game/chapter2', { valideCode: false, finalCode: '' })
+        res.render('game/chapter2', { secretURL: '' })
     }
 })
 
 router.get('/chapter3', (req, res) => {
     if (req.cookies['You_Ended_The_Game!'] !== undefined) {
         const finalCode = req.cookies['something'].replace(/[;]/g, '')
-        res.render('game/chapter3', { finalCode: finalCode })
+        res.render('game/chapter3', { valideCode: true, finalCode: finalCode })
     } else {
-        res.render('game/chapter3', { finalCode: '' })
+        res.render('game/chapter3', { valideCode: false, finalCode: '' })
     }
 })
 
 router.get('/chapter4', (req, res) => {
-    res.render('game/chapter4')
+    if (req.cookies['loggedInNoteRoom']) {
+        res.render('game/chapter4', { gameEnd: true })
+    } else {
+        res.render('game/chapter4', { gameEnd: false })
+    }
 })
 
 router.get('/end', (req, res) => {
     res.render('game/end')
 })
 
-router.post('/chapter2', async (req, res) => {
+router.post('/chapter3', async (req, res) => {
     try {
         if (req.cookies['something'] !== undefined) {
             const finalCode = req.body.passwd
