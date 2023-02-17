@@ -42,7 +42,7 @@ router.get('/chef-vm', (req, res) => {
 })
 
 router.get('/chef-vm/passwd-vm', (req, res) => {
-    const encryptedChefVMPassword = CryptoJS.AES.encrypt(req.cookies['chefVMPassword'], 'chef-vm-password').toString()
+    const encryptedChefVMPassword = CryptoJS.SHA1(req.cookies['chefVMPassword'])
 
     res.render('admin/passwd-vm', { encryptedChefVMPassword: encryptedChefVMPassword })
 })
@@ -99,8 +99,8 @@ router.post('/', async (req, res) => {
 
 router.post('/chef-vm', (req, res) => {
     if (req.cookies['loggedInChefVM'] === undefined) {
-        const chefVMPassword = req.cookies['chefVMPassword']
-        const passwordCheck = CryptoJS.AES.decrypt(req.body.passwd, 'chef-vm-password').toString(CryptoJS.enc.Utf8)
+        const chefVMPassword = CryptoJS.SHA1(req.cookies['chefVMPassword']).toString()
+        const passwordCheck = req.body.passwd
 
         if (chefVMPassword === passwordCheck) {
             const secretLoggedInKey = uuid.v4()
@@ -111,6 +111,8 @@ router.post('/chef-vm', (req, res) => {
             }
 
             res.cookie('loggedInChefVM', secretLoggedInKey, options)
+            res.redirect('/admin/chef-vm')
+        } else {
             res.redirect('/admin/chef-vm')
         }
     } else if (req.cookies['loggedInChefVM'] !== undefined && req.cookies['secretURL'] === undefined) {

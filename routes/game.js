@@ -42,7 +42,11 @@ router.get('/chapter4', (req, res) => {
 })
 
 router.get('/end', (req, res) => {
-    res.render('game/end')
+    if (req.cookies['loggedInNoteRoom'] !== undefined && req.cookies['You_Ended_The_Game!'] !== undefined) {
+        res.render('game/end')
+    } else {
+        res.redirect('/game/chapter4')
+    }
 })
 
 router.post('/chapter3', async (req, res) => {
@@ -57,13 +61,13 @@ router.post('/chapter3', async (req, res) => {
                     sameSite: true
                 }
 
-                res.cookie('You_Ended_The_Game!', 'Congrats!', options)
-                res.render('game/chapter2', { valideCode: true, finalCode: actualCode })
+                res.cookie('You_Ended_The_Game!', 'It_is_the_end?', options)
+                res.render('game/chapter3', { valideCode: true, finalCode: actualCode })
             } else {
-                res.render('game/chapter2', { valideCode: false, finalCode: 'Wrong Code!' })
+                res.render('game/chapter3', { valideCode: false, finalCode: 'Wrong Code!' })
             }
         } else {
-            res.render('game/chapter2', { valideCode: false, finalCode: '' })
+            res.render('game/chapter3', { valideCode: false, finalCode: '' })
         }
     } catch (err) {
         console.log(err)
