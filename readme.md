@@ -1,4 +1,4 @@
-# Escape From IUT WIP
+# Escape From IUT
 
 1. To run this project you have to download this repository:
 ```bash
